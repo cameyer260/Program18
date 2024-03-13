@@ -91,20 +91,34 @@ public class Program18 {
 	}
 	
 	private static double distanceFormula(double[] point1, double[] point2) {
-		return Math.sqrt(Math.pow(point2[0] - point1[0], 2) + Math.pow(point2[1] - point2[1], 2));
+		return Math.sqrt(Math.pow(point2[0] - point1[0], 2) + Math.pow(point2[1] - point1[1], 2));
 	}
 	
 	private static void sortPointsByX(double[][] points) {
-		
+		for(int i=0; i<points.length; i++) {
+			for(int j=0; j<points.length-1; j++) {
+				if(points[j][0] > points[j+1][0]) {
+					double temp1 = points[j][0];
+					points[j][0] = points[j+1][0];
+					points[j+1][0] = temp1;
+					double temp2 = points[j][1];
+					points[j][1] = points[j+1][1];
+					points[j+1][1] = temp2;
+				}
+			}
+		}
 	}
 	
 	private static double calculateTriangleArea(double[][] points) {
 		double a = distanceFormula(points[0], points[1]);
 		double b = distanceFormula(points[1], points[2]);
-		double c = distanceFormula(points[2], points[3]);
+		double c = distanceFormula(points[2], points[0]);
+		System.out.println(a + " " + b + " " + c);
 		
 		double semiP = (a + b + c)/2;
-		return Math.sqrt(semiP*(a-semiP)*(b-semiP)*(c-semiP));
+		double answer = semiP*(semiP-a)*(semiP-b)*(semiP-c);
+		
+		return Math.sqrt(answer);
 	}
 	
 	/**
@@ -113,16 +127,17 @@ public class Program18 {
 	 * @return
 	 */
 	private static double calculateQuadrilateralArea(double[][] points) {
-		if(points.length < 3) {
-			throw new IllegalArgumentException("A polygon must have at least 3 vertices");
+		sortPointsByX(points);
+		double[][] tri1 = new double[3][2];
+		double[][] tri2 = new double[3][2];
+		for(int i=0; i<3; i++) {
+			tri1[i][0] = points[i][0];
+			tri1[i][1] = points[i][1];
+			tri2[i][0] = points[i+1][0];
+			tri2[i][1] = points[i+1][1];
 		}
-		
-		double total = 0;
-		for(int i=0; i< points.length; i++) {
-			int j = (i+1) % points.length;
-			total+= points[i][0] * points[j][1] - points[j][0] * points[i][1];
-		}
-		return Math.abs(total / 2.0);
+		System.out.println(calculateTriangleArea(tri1) + calculateTriangleArea(tri2));
+		return calculateTriangleArea(tri1) + calculateTriangleArea(tri2);
 	}
 	
 	/**
@@ -176,7 +191,7 @@ public class Program18 {
 			t2Points[2][0]=-9.1;
 			t2Points[2][1]=8.18;
 			double[] target2 = new double[2];
-			target2[0] = -4.4;
+			target2[0] = -2.0; //CHANGE BACK TO MEINZEIT NUMBER ON WEBISTE
 			target2[1] = 3.8;
 			if(function3(t2Points, target2)) {
 				myWriter.write("The point (" + target2[0] + ", " + target2[1] + ") is "

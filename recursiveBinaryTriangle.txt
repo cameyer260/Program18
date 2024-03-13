@@ -9,5 +9,5 @@ Using the following points: x=1, y=1000, z=1023 +
 Output: 0
 
 Function 3: 
-The point (2.5, 3.0) is inside the triangle with coordinates (2.2, 5.6), (1.1, 2.2), (2.4, 4.7).
-The point (-4.4, 3.8) is inside the triangle with coordinates (2.2, 3.0), (-2.7, 3.0), (-9.1, 8.18).
+The point (2.5, 3.0) is not inside the triangle with coordinates (2.2, 5.6), (1.1, 2.2), (2.4, 4.7).
+The point (-2.0, 3.8) is not inside the triangle with coordinates (2.2, 3.0), (-2.7, 3.0), (-9.1, 8.18).
